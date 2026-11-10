@@ -6,8 +6,11 @@ Route::get('/', function () {
     return view('home');
 })->name('home');
 
-Route::get('/login', function () {
-    return 'Pantalla de Login (en desarrollo)';
+Route::match(['get', 'post'], '/login', function () {
+    if (request()->isMethod('post')) {
+        return 'Datos de inicio de sesión recibidos (en desarrollo)';
+    }
+    return view('auth.login');
 })->name('login');
 
 Route::match(['get', 'post'], '/register', function () {
