@@ -19,3 +19,7 @@ Route::match(['get', 'post'], '/register', function () {
     }
     return view('auth.register');
 })->name('register');
+
+Route::get('/categorias', function () {
+    return view('categories.index');
+})->name('categories.index');

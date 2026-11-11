@@ -19,7 +19,7 @@
                         Inicio
                     </a>
 
-                    <a href="#"
+                    <a href="{{ route('categories.index') }}"
                         class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300">
                         Guía de Categorías
                     </a>
@@ -55,7 +55,8 @@
                 @else
                     <div class="space-x-4">
                         <a href="#" class="text-sm text-gray-700 hover:text-gray-900 font-medium">Iniciar sesión</a>
-                        <a href="#" class="inline-flex items-center px-4 py-2 bg-green-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-green-700 focus:bg-green-700 active:bg-green-900 transition">Registrarse</a>
+                        <a href="#"
+                            class="inline-flex items-center px-4 py-2 bg-green-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-green-700 focus:bg-green-700 active:bg-green-900 transition">Registrarse</a>
                     </div>
                 @endauth
             </div>
@@ -81,7 +82,7 @@
                 class="block w-full ps-3 pe-4 py-2 border-l-4 border-green-400 text-start text-base font-medium text-green-700 bg-green-50">
                 Inicio
             </a>
-            <a href="#"
+            <a href="{{ route('categories.index') }}"
                 class="block w-full ps-3 pe-4 py-2 border-l-4 border-transparent text-start text-base font-medium text-gray-600 hover:text-gray-800 hover:bg-gray-50">
                 Guía de Categorías
             </a>
