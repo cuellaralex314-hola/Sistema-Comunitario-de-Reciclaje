@@ -37,3 +37,7 @@ Route::get('/mis-publicaciones', function () {
 
     return view('publications.index', compact('publicaciones'));
 })->name('publications.index');
+
+Route::get('/puntos-verdes', function () {
+    return view('puntos-verdes.index');
+})->name('puntos-verdes.index');
