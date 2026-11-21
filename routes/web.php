@@ -41,3 +41,12 @@ Route::get('/mis-publicaciones', function () {
 Route::get('/puntos-verdes', function () {
     return view('puntos-verdes.index');
 })->name('puntos-verdes.index');
+
+Route::view('/admin/puntos-verdes/crear', 'admin.puntos-verdes.create')
+    ->name('admin.puntos-verdes.create');
+
+Route::redirect('/admin/puntos-verdes', '/')
+    ->name('admin.puntos-verdes.index');
+
+Route::post('/admin/puntos-verdes', fn () => redirect('/'))
+    ->name('admin.puntos-verdes.store');
