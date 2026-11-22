@@ -17,3 +17,9 @@ Route::patch('/solicitudes/{id}/cancelar', fn () => back()->with('status', 'La s
 
 Route::post('/solicitudes', fn () => back()->with('status', 'Solicitud registrada en la vista de prueba.'))
     ->name('solicitudes.store');
+
+Route::view('/admin/solicitudes', 'admin.solicitudes.index')
+    ->name('admin.solicitudes.index');
+
+Route::patch('/admin/solicitudes/{id}/asignar', fn () => back()->with('status', 'Solicitud actualizada correctamente.'))
+    ->name('admin.solicitudes.asignar');
