@@ -29,3 +29,6 @@ Route::view('/recolector/solicitudes', 'recolector.solicitudes.index')
 
 Route::patch('/recolector/solicitudes/{id}/estado', fn () => back()->with('status', 'Estado del retiro actualizado.'))
     ->name('recolector.solicitudes.estado');
+
+Route::patch('/notificaciones/leer-todas', fn () => back()->with('status', 'Todas las notificaciones fueron marcadas como leídas.'))
+    ->name('notificaciones.leer-todas');
