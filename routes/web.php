@@ -23,3 +23,9 @@ Route::view('/admin/solicitudes', 'admin.solicitudes.index')
 
 Route::patch('/admin/solicitudes/{id}/asignar', fn () => back()->with('status', 'Solicitud actualizada correctamente.'))
     ->name('admin.solicitudes.asignar');
+
+Route::view('/recolector/solicitudes', 'recolector.solicitudes.index')
+    ->name('recolector.solicitudes.index');
+
+Route::patch('/recolector/solicitudes/{id}/estado', fn () => back()->with('status', 'Estado del retiro actualizado.'))
+    ->name('recolector.solicitudes.estado');
