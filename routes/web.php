@@ -13,3 +13,7 @@ Route::get('/estadisticas', function () {
 Route::get('/admin/estadisticas', function () {
     return view('admin.estadisticas');
 })->name('admin.estadisticas');
+
+Route::get('/vecino', function () {
+    return view('vecino.inicio');
+})->name('vecino.inicio');
