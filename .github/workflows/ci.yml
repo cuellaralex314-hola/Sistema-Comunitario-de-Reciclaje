@@ -1,0 +1,87 @@
+name: CI - Laravel
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+
+  pull_request:
+    branches:
+      - main
+      - develop
+
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  tests-and-build:
+    name: Tests and frontend build (PHP ${{ matrix.php }})
+    runs-on: ubuntu-latest
+
+    # CAMBIO: solo PHP 8.4 hasta unir el ajuste config.platform.php = 8.3.0
+    # (el composer.lock actual trae Symfony 8.1, que exige PHP >= 8.4)
+    strategy:
+      fail-fast: false
+      matrix:
+        php: ['8.4']
+
+    # CAMBIO: base MySQL para los tests (phpunit.xml usa reciclaje_comunitario_test)
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: reciclaje_comunitario_test
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1 -proot"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
+    steps:
+      - name: Descargar repositorio
+        uses: actions/checkout@v7
+
+      - name: Configurar PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          # CAMBIO: pdo_mysql para los tests sobre MySQL
+          extensions: mbstring, pdo_mysql, pdo_sqlite, sqlite3, xml, dom, curl, fileinfo
+          coverage: none
+
+      - name: Preparar archivo de entorno
+        run: cp .env.example .env
+
+      - name: Instalar dependencias de PHP
+        run: composer install --prefer-dist --no-interaction --no-progress
+
+      - name: Generar clave de Laravel
+        run: php artisan key:generate
+
+      # CAMBIO: el frontend se compila ANTES de los tests,
+      # porque el layout usa @vite y necesita public/build/manifest.json
+      - name: Configurar Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Instalar dependencias de JavaScript
+        run: npm ci
+
+      - name: Compilar frontend
+        run: npm run build
+
+      - name: Ejecutar pruebas de Laravel
+        env:
+          DB_HOST: 127.0.0.1
+          DB_PORT: 3306
+          DB_USERNAME: root
+          DB_PASSWORD: root
+        run: php artisan test
