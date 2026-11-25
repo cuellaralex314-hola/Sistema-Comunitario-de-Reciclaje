@@ -7,6 +7,7 @@ use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -28,5 +29,25 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function materiales(): HasMany
+    {
+        return $this->hasMany(Material::class, 'user_id');
+    }
+
+    public function solicitudesComoVecino(): HasMany
+    {
+        return $this->hasMany(SolicitudRetiro::class, 'vecino_id');
+    }
+
+    public function solicitudesComoRecolector(): HasMany
+    {
+        return $this->hasMany(SolicitudRetiro::class, 'recolector_id');
+    }
+
+    public function historialEstados(): HasMany
+    {
+        return $this->hasMany(HistorialEstado::class, 'user_id');
     }
 }
