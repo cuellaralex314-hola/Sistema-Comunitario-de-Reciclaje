@@ -35,9 +35,6 @@ Route::post('/solicitudes', fn () => back()->with('status', 'Solicitud registrad
 Route::view('/admin/solicitudes', 'admin.solicitudes.index')
     ->name('admin.solicitudes.index');
 
-Route::patch('/admin/solicitudes/{id}/asignar', fn () => back()->with('status', 'Solicitud actualizada correctamente.'))
-    ->name('admin.solicitudes.asignar');
-
 Route::view('/recolector/solicitudes', 'recolector.solicitudes.index')
     ->name('recolector.solicitudes.index');
 
