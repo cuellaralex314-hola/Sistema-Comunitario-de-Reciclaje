@@ -20,6 +20,14 @@ Route::middleware('guest')->group(function () {
     Route::post('/login', [LoginController::class, 'store'])->name('login.store');
 });
 
+Route::get('/estadisticas', function () {
+    return view('admin.estadisticas');
+})->name('estadisticas');
+
+Route::get('/vecino', function () {
+    return view('vecino.inicio');
+})->name('vecino.inicio');
+
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [LoginController::class, 'destroy'])->name('logout');
     Route::get('/vecino', function () {
@@ -60,9 +68,6 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['auth', 'rol:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', PanelController::class)->name('panel');
-    Route::get('/estadisticas', function () {
-        return view('admin.estadisticas');
-    })->name('estadisticas');
 
     Route::middleware('can:usuarios.gestionar')->prefix('usuarios')->name('usuarios.')->group(function () {
         Route::get('/', [UsuarioController::class, 'index'])->name('index');
@@ -97,4 +102,8 @@ Route::middleware(['auth', 'rol:admin'])->group(function () {
     Route::get('/estadisticas', function () {
         return view('admin.estadisticas');
     })->name('estadisticas');
+
+    Route::get('/admin/estadisticas', function () {
+        return view('admin.estadisticas');
+    })->name('admin.estadisticas');
 });
