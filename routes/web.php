@@ -20,32 +20,11 @@ Route::middleware('guest')->group(function () {
     Route::post('/login', [LoginController::class, 'store'])->name('login.store');
 });
 
-Route::view('/solicitudes/nueva', 'solicitudes.create')
-    ->name('solicitudes.create');
-
-Route::view('/mis-solicitudes', 'solicitudes.index')
-    ->name('solicitudes.index');
-
-Route::patch('/solicitudes/{id}/cancelar', fn () => back()->with('status', 'La solicitud fue cancelada.'))
-    ->name('solicitudes.cancelar');
-
-Route::post('/solicitudes', fn () => back()->with('status', 'Solicitud registrada en la vista de prueba.'))
-    ->name('solicitudes.store');
-
-Route::view('/admin/solicitudes', 'admin.solicitudes.index')
-    ->name('admin.solicitudes.index');
-
-Route::view('/recolector/solicitudes', 'recolector.solicitudes.index')
-    ->name('recolector.solicitudes.index');
-
-Route::patch('/recolector/solicitudes/{id}/estado', fn () => back()->with('status', 'Estado del retiro actualizado.'))
-    ->name('recolector.solicitudes.estado');
-
-Route::patch('/notificaciones/leer-todas', fn () => back()->with('status', 'Todas las notificaciones fueron marcadas como leídas.'))
-    ->name('notificaciones.leer-todas');
-
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [LoginController::class, 'destroy'])->name('logout');
+    Route::get('/vecino', function () {
+        return view('vecino.inicio');
+    })->name('vecino.inicio');
 
     Route::get('/publicaciones/crear', function () {
         return view('publications.create');
@@ -81,6 +60,9 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['auth', 'rol:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', PanelController::class)->name('panel');
+    Route::get('/estadisticas', function () {
+        return view('admin.estadisticas');
+    })->name('estadisticas');
 
     Route::middleware('can:usuarios.gestionar')->prefix('usuarios')->name('usuarios.')->group(function () {
         Route::get('/', [UsuarioController::class, 'index'])->name('index');
@@ -110,3 +92,9 @@ Route::get('/categorias', function () {
 Route::get('/puntos-verdes', function () {
     return view('puntos-verdes.index');
 })->name('puntos-verdes.index');
+
+Route::middleware(['auth', 'rol:admin'])->group(function () {
+    Route::get('/estadisticas', function () {
+        return view('admin.estadisticas');
+    })->name('estadisticas');
+});

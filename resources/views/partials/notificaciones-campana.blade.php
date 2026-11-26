@@ -6,7 +6,7 @@
             'detalle' => 'Carlos Gómez fue asignado para el turno de 13:00 a 17:00.',
             'hace' => 'Hace 10 min',
             'leida' => false,
-            'url' => route('solicitudes.index'),
+            'url' => route('home'),
         ],
         (object) [
             'id' => 2,
@@ -14,7 +14,7 @@
             'detalle' => 'Barrio San Martín · Plástico, Papel/cartón y Vidrio.',
             'hace' => 'Hace 35 min',
             'leida' => false,
-            'url' => route('admin.solicitudes.index'),
+            'url' => route('admin.panel'),
         ],
         (object) [
             'id' => 3,
@@ -22,7 +22,7 @@
             'detalle' => 'Se finalizó la recolección en Rivadavia 620.',
             'hace' => 'Ayer',
             'leida' => true,
-            'url' => route('recolector.solicitudes.index'),
+            'url' => route('recolector.retiros.index'),
         ],
     ]);
 
@@ -66,16 +66,9 @@
                 @endif
             </div>
 
-            <form action="{{ route('notificaciones.leer-todas') }}" method="POST">
-                @csrf
-                @method('PATCH')
-                <button
-                    type="submit"
-                    class="text-xs font-medium text-emerald-700 hover:underline"
-                >
-                    Marcar leídas
-                </button>
-            </form>
+            <span class="text-xs font-medium text-gray-400">
+                Actualizadas
+            </span>
         </div>
 
         <div class="max-h-80 divide-y divide-gray-100 overflow-y-auto">
