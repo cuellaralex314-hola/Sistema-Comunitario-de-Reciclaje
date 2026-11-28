@@ -32,8 +32,9 @@ class LoginController extends Controller
         // Nuevo identificador de sesión: evita la fijación de sesión.
         $request->session()->regenerate();
 
+               // Si venía de una página protegida, vuelve ahí; si no, a la página de inicio de su rol.
         return redirect()
-            ->intended(route('home'))
+            ->intended($request->user()->rutaDeInicio())
             ->with('status', 'Hola, '.$request->user()->name.'. Iniciaste sesión.');
     }
 

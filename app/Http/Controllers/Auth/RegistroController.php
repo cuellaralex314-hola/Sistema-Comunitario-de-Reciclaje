@@ -50,8 +50,9 @@ class RegistroController extends Controller
         Auth::login($user);
         $request->session()->regenerate();
 
+                // Quien se registra siempre es vecino: va directo a su inicio.
         return redirect()
-            ->route('home')
+            ->route('vecino.inicio')
             ->with('status', "¡Bienvenido/a, {$user->name}! Tu cuenta fue creada.");
     }
 }

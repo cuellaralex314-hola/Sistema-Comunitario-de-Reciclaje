@@ -72,6 +72,18 @@ class User extends Authenticatable
         return (int) $this->rol_id === Rol::RECOLECTOR;
     }
 
+    /**
+     * Página a la que va cada rol después de iniciar sesión o registrarse.
+     */
+    public function rutaDeInicio(): string
+    {
+        return match ((int) $this->rol_id) {
+            Rol::ADMIN => route('admin.panel'),
+            Rol::RECOLECTOR => route('recolector.retiros.index'),
+            default => route('vecino.inicio'),
+        };
+    }
+
     public function esAdmin(): bool
     {
         return (int) $this->rol_id === Rol::ADMIN;
