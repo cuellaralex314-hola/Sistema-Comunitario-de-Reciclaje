@@ -28,11 +28,21 @@ class LoginTest extends TestCase
     public function test_inicia_sesion_con_datos_correctos(): void
     {
         $this->post('/login', ['email' => 'laura@reciclaje.test', 'password' => 'password'])
-            ->assertRedirect(route('home'));
+            ->assertRedirect(route('vecino.inicio'));
 
         $this->assertAuthenticatedAs($this->laura());
     }
+    public function test_el_admin_va_a_su_panel_despues_del_login(): void
+    {
+        $this->post('/login', ['email' => 'admin@reciclaje.test', 'password' => 'password'])
+            ->assertRedirect(route('admin.panel'));
+    }
 
+    public function test_el_recolector_va_a_sus_retiros_despues_del_login(): void
+    {
+        $this->post('/login', ['email' => 'coop@reciclaje.test', 'password' => 'password'])
+            ->assertRedirect(route('recolector.retiros.index'));
+    }
     public function test_el_email_no_distingue_mayusculas(): void
     {
         $this->post('/login', ['email' => 'Laura@Reciclaje.TEST', 'password' => 'password']);

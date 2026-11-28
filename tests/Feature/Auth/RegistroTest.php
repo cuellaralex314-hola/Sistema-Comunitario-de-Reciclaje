@@ -42,7 +42,7 @@ class RegistroTest extends TestCase
     public function test_registra_un_vecino_e_inicia_su_sesion(): void
     {
         $this->post('/register', $this->datosValidos())
-            ->assertRedirect(route('home'));
+            ->assertRedirect(route('vecino.inicio'));
 
         $user = User::where('email', 'ana@mail.com')->first();
 
