@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class CategoriaResiduo extends Model
@@ -24,6 +25,21 @@ class CategoriaResiduo extends Model
             'activo' => 'boolean',
             'factor_co2_kg' => 'decimal:2',
         ];
+    }
+
+    public function articulos(): HasMany
+    {
+        return $this->hasMany(ArticuloResiduo::class, 'categoria_id');
+    }
+
+    public function puntosRecepcion(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            PuntoRecepcion::class,
+            'punto_categoria',
+            'categoria_id',
+            'punto_id',
+        );
     }
 
     public function materiales(): HasMany
